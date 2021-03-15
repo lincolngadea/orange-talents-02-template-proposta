@@ -13,14 +13,16 @@ public class NovaPropostaRequest {
 
     @NotBlank
     private String nome;
-    @NotBlank
-    @CPFouCNPJ
-//    @ValorUnico(nomeDoCampo = "documento",classeDoDominio = Proposta.class)
+
+    @NotBlank @CPFouCNPJ
     private String documento;
+
     @Email(message = "Informe um email Válido") @NotBlank
     private String email;
+
     @NotNull @Positive
     private BigDecimal salario;
+
     @NotBlank
     private String endereco;
 

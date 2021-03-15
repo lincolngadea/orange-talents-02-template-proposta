@@ -8,26 +8,34 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Entity
 @Table(name = "proposta")
 public class Proposta {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", updatable = false, unique = true, nullable = false)
+    private UUID id;
 
     @NotBlank
+    @Column(name = "nome",nullable = false)
     private String nome;
 
     @NotBlank @CPFouCNPJ
+    @Column(name = "documento",nullable = false)
     private String documento;
 
     @Email(message = "Informe um email Válido") @NotBlank
+    @Column(name = "email",nullable = false)
     private String email;
 
     @NotNull  @Positive
+    @Column(name = "salario", nullable = false)
     private BigDecimal salario;
+
     @NotBlank
+    @Column(name = "endereco",nullable = false)
     private String endereco;
 
     @Deprecated
@@ -36,10 +44,9 @@ public class Proposta {
     public Proposta(
             @NotBlank String nome,
             @NotBlank String documento,
-            @Email @NotBlank String email,
+            @Email(message = "Informe um email Válido") @NotBlank String email,
             @NotNull @Positive BigDecimal salario,
-            @NotBlank String endereco
-    ) {
+            @NotBlank String endereco) {
         this.nome = nome;
         this.documento = documento;
         this.email = email;
@@ -47,7 +54,7 @@ public class Proposta {
         this.endereco = endereco;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
