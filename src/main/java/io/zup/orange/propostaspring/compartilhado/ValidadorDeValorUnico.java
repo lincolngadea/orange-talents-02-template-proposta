@@ -27,11 +27,11 @@ public class ValidadorDeValorUnico implements ConstraintValidator<ValorUnico, Ob
     @Override
     public boolean isValid(Object valor, ConstraintValidatorContext contexto) {
         Query query = manager.createQuery(
-                "select 1 from "
-                    + classe.getName() +
-                    " where "
-                    + atributoDoDominio +
-                    "=:valor"
+                "select 1 from "+
+                        classe.getName() +
+                        " where "+
+                        atributoDoDominio +
+                        "=:valor"
         );
 
         query.setParameter("valor",valor);
