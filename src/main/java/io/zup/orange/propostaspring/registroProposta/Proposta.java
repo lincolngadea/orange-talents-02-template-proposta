@@ -1,6 +1,6 @@
 package io.zup.orange.propostaspring.registroProposta;
 
-import io.zup.orange.propostaspring.compartilhado.CPFouCNPJ;
+import io.zup.orange.propostaspring.compartilhado.annotations.CPFouCNPJ;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;

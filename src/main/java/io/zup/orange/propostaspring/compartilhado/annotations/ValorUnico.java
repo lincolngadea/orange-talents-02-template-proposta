@@ -1,4 +1,4 @@
-package io.zup.orange.propostaspring.compartilhado;
+package io.zup.orange.propostaspring.compartilhado.annotations;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

@@ -1,4 +1,4 @@
-package io.zup.orange.propostaspring.compartilhado;
+package io.zup.orange.propostaspring.compartilhado.annotations;
 
 import org.springframework.util.Assert;
 

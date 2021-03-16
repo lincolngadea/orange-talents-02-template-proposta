@@ -1,5 +1,8 @@
 package io.zup.orange.propostaspring.registroProposta;
 
+import io.zup.orange.propostaspring.compartilhado.log.Logback;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,22 +19,25 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/api")
-public class propostaController {
+public class PropostaController {
 
     @PersistenceContext
     private EntityManager manager;
+
+    private final Logger logger = LoggerFactory.getLogger(Logback.class);
 
     @PostMapping("/proposta")
     @Transactional
     public ResponseEntity<?> criaProposta(@RequestBody @Valid NovaPropostaRequest request, UriComponentsBuilder builder){
 
         Proposta proposta = request.toModel();
-
         manager.persist(proposta);
 
-        URI location = builder.path("/proposta/{id}").build(proposta.getId());
+        logger.info("Proposta documento={} salário={} criada com sucesso!", proposta.getDocumento(),proposta.getSalario());
 
+        URI location = builder.path("/proposta/{id}").build(proposta.getId());
         return ResponseEntity.created(location).body(new NovaPropostaResponse(proposta));
+
     }
 
 }
