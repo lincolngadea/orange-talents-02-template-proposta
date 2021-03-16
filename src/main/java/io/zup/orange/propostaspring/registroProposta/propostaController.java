@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,19 +23,15 @@ public class propostaController {
 
     @PostMapping("/proposta")
     @Transactional
-    public ResponseEntity<?> criaProposta(@RequestBody @Valid NovaPropostaRequest request){
+    public ResponseEntity<?> criaProposta(@RequestBody @Valid NovaPropostaRequest request, UriComponentsBuilder builder){
 
         Proposta proposta = request.toModel();
 
         manager.persist(proposta);
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/proposta/{id}")
-                .buildAndExpand(proposta.getId())
-                .toUri();
+        URI location = builder.path("/proposta/{id}").build(proposta.getId());
 
-        return ResponseEntity.created(location).body(proposta);
+        return ResponseEntity.created(location).body(new NovaPropostaResponse(proposta));
     }
 
 }
