@@ -35,7 +35,7 @@ public class PropostaController {
 
         logger.info("Proposta documento={} salário={} criada com sucesso!", proposta.getDocumento(),proposta.getSalario());
 
-        URI location = builder.path("/proposta/{id}").build(proposta.getId());
+        URI location = builder.path("/api/proposta/{id}").build(proposta.getId());
         return ResponseEntity.created(location).body(new NovaPropostaResponse(proposta));
 
     }
