@@ -23,7 +23,7 @@ public class Proposta {
     private String nome;
 
     @NotBlank @CPFouCNPJ
-    @Column(name = "documento",nullable = false)
+    @Column(name = "documento",nullable = false, unique = true)
     private String documento;
 
     @Email(message = "Informe um email Válido") @NotBlank

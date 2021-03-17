@@ -2,11 +2,15 @@ package io.zup.orange.propostaspring.registroProposta;
 
 import io.zup.orange.propostaspring.compartilhado.annotations.CPFouCNPJ;
 
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
+import java.util.Optional;
 
 public class NovaPropostaRequest {
 
@@ -73,7 +77,7 @@ public class NovaPropostaRequest {
                 '}';
     }
 
-    public Proposta toModel() {
-        return new Proposta(nome,documento,email,salario,endereco);
+    public Proposta toModel(){
+        return new Proposta(nome, this.documento,email,salario,endereco);
     }
 }

@@ -28,7 +28,7 @@ class PropostaControllerTest {
     static String URI_API = "/api/proposta";
 
     @Autowired
-    private EntityManager manager;
+    private PropostaRepository propostaRepository;
 
     @Autowired
     MockMvc mvc;
@@ -48,11 +48,10 @@ class PropostaControllerTest {
 
         MockHttpServletRequestBuilder builder = MockBuilder.run(URI_API, json);
         MvcResult mvcResult = mvc.perform(builder).andExpect(status().isCreated()).andReturn();
-        Proposta propostaConsultada = (Proposta) manager.createQuery(
-                "select p from Proposta p where p.documento = '186.375.330-35'")
-                .getSingleResult();
 
-        String locationResponse = "http://localhost"+URI_API+"/"+propostaConsultada.getId();
+        Proposta byDocumento = (Proposta) propostaRepository.findByDocumento("186.375.330-35");
+
+        String locationResponse = "http://localhost"+URI_API+"/"+byDocumento.getId();
         String location = mvcResult.getResponse().getHeader("Location");
         Assertions.assertNotNull(location);
         Assertions.assertEquals(location, locationResponse);
