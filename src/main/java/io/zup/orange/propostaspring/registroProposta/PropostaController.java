@@ -38,35 +38,35 @@ public class PropostaController {
             @RequestBody @Valid NovaPropostaRequest request,
             UriComponentsBuilder builder){
 
+        //Grava no Banco de dados
         Proposta proposta = request.toModel();
-
         if(propostaRepository.existsByDocumento(proposta.getDocumento())){
             return ResponseEntity.unprocessableEntity()
-                    .body("O Cliente já Possui Proposta! Documento"+proposta.getDocumento());
-        }
-
+                    .body("O Cliente já Possui Proposta! Documento"+proposta.getDocumento());}
         propostaRepository.save(proposta);
 
-        SubmetePropostaAnaliseRequest requisicao = new SubmetePropostaAnaliseRequest(proposta);
-        PropostaStatus status = null;
-        try {
-            SubmetePropostaAnaliseResponse resposta = analisaCliente.submeterParaAnalise(requisicao);
-            status = resposta.toModel();
-        }catch (FeignException.UnprocessableEntity e){
-            status = PropostaStatus.NAO_ELEGIVEL;
-        }catch (Exception e){
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Aconteceu um erro inesperado!");
-        }
-
+        //Submete para análise
+        PropostaStatus status = submetePropostaParaAnalise(proposta);
         proposta.updateStatus(status);
 
-        logger.info(
-                "Proposta documento={} salário={} criada com sucesso!",
-                proposta.getDocumento(),proposta.getSalario()
-        );
+        //loga após salvar no banco
+        logger.info("Proposta documento={} salário={} criada com sucesso!",
+                proposta.getDocumento(),proposta.getSalario());
 
         URI location = builder.path("/api/proposta/{id}").build(proposta.getId());
         return ResponseEntity.created(location).body(new NovaPropostaResponse(proposta));
     }
 
+    private PropostaStatus submetePropostaParaAnalise(Proposta proposta) {
+
+        try {
+            SubmetePropostaAnaliseRequest requisicao = new SubmetePropostaAnaliseRequest(proposta);
+            SubmetePropostaAnaliseResponse resposta = analisaCliente.submeterParaAnalise(requisicao);
+            return resposta.toModel();
+        }catch (FeignException.UnprocessableEntity e){
+            return PropostaStatus.NAO_ELEGIVEL;
+        }catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"Aconteceu um erro inesperado!");
+        }
+    }
 }
