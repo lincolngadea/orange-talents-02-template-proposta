@@ -1,6 +1,7 @@
 package io.zup.orange.propostaspring.registroProposta;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public class NovaPropostaResponse {
 
@@ -9,6 +10,8 @@ public class NovaPropostaResponse {
     private String email;
     private BigDecimal salario;
     private String endereco;
+    private LocalDateTime updateAt;
+    private String propostaStatus;
 
     public NovaPropostaResponse(Proposta proposta){
         nome = proposta.getNome();
@@ -16,6 +19,8 @@ public class NovaPropostaResponse {
         email = proposta.getEmail();
         salario = proposta.getSalario();
         endereco = proposta.getEndereco();
+        updateAt = proposta.getUpdatedAt();
+        propostaStatus = proposta.getPropostaStatus().toString();
     }
 
     public String getNome() {
@@ -36,5 +41,13 @@ public class NovaPropostaResponse {
 
     public String getEndereco() {
         return endereco;
+    }
+
+    public LocalDateTime getUpdateAt() {
+        return updateAt;
+    }
+
+    public String getPropostaStatus() {
+        return propostaStatus;
     }
 }

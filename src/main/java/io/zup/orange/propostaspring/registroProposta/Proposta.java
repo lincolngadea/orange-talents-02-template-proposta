@@ -40,7 +40,7 @@ public class Proposta {
     private String endereco;
 
     @Column(name = "instantCreated", nullable = false)
-    private LocalDateTime localDateTime = LocalDateTime.now();
+    private LocalDateTime updatedAt = LocalDateTime.now();
 
     @Enumerated(EnumType.STRING)
     private PropostaStatus propostaStatus = PropostaStatus.NAO_ELEGIVEL;
@@ -85,11 +85,17 @@ public class Proposta {
         return endereco;
     }
 
-    public LocalDateTime getLocalDateTime() {
-        return localDateTime;
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
     public PropostaStatus getPropostaStatus() {
         return propostaStatus;
+    }
+
+    public void updateStatus(PropostaStatus status) {
+        this.propostaStatus = status;
+        this.updatedAt = LocalDateTime.now();
     }
 }
