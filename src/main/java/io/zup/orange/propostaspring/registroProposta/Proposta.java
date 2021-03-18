@@ -8,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -37,6 +38,12 @@ public class Proposta {
     @NotBlank
     @Column(name = "endereco",nullable = false)
     private String endereco;
+
+    @Column(name = "instantCreated", nullable = false)
+    private LocalDateTime localDateTime = LocalDateTime.now();
+
+    @Enumerated(EnumType.STRING)
+    private PropostaStatus propostaStatus = PropostaStatus.NAO_ELEGIVEL;
 
     @Deprecated
     public Proposta(){}
@@ -76,5 +83,13 @@ public class Proposta {
 
     public String getEndereco() {
         return endereco;
+    }
+
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
+    }
+
+    public PropostaStatus getPropostaStatus() {
+        return propostaStatus;
     }
 }
