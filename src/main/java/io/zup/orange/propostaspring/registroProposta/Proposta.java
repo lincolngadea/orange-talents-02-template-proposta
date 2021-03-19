@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.UUID;
 
 @Entity
@@ -44,6 +45,8 @@ public class Proposta {
 
     @Enumerated(EnumType.STRING)
     private PropostaStatus propostaStatus = PropostaStatus.NAO_ELEGIVEL;
+
+//    private List<Cartao> cartaoList = new ArrayList<>();
 
     @Deprecated
     public Proposta(){}

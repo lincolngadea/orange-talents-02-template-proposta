@@ -42,7 +42,7 @@ public class PropostaController {
         Proposta proposta = request.toModel();
         if(propostaRepository.existsByDocumento(proposta.getDocumento())){
             return ResponseEntity.unprocessableEntity()
-                    .body("O Cliente já Possui Proposta! Documento"+proposta.getDocumento());}
+                    .body("O Cliente já Possui Proposta! Documento: "+proposta.getDocumento());}
         propostaRepository.save(proposta);
 
         //Submete para análise

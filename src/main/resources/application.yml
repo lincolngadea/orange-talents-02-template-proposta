@@ -16,9 +16,10 @@ spring:
     password: password
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
 
-uri_analise_financeira: http://localhost:9999/
+uri_analise_financeira: "http://localhost:9999/"
+uri_cartao: "http://localhost:8888/"
 
 feign:
   client:
@@ -29,19 +30,13 @@ feign:
         readTimeout: 5000
 
 logging.level.io.zup.orange.propostaspring.registroProposta.analiseFinanceira.AnaliseFinanceiraDeClientes: DEBUG
-#spring:
-#  datasource:
-#    url: jdbc:h2:mem:proposta
-#    driverClassName: org.h2.Driver
-#    username: sa
-#    password:
-#  h2:
-#    console:
-#      enabled: true
-#      path: /h2-console
-#  jpa:
-#    database-plataform: org.hibernate.dialect.H2Dialect
-#    properties:
-#      hibernates:
-#        show_sql: true
-#        format_sql: true
+
+management:
+  endpoints:
+    web:
+      cors:
+        allowed-origins: "http://localhost:9999/"
+        allowed-methods: "GET"
+  endpoint:
+    health:
+      show-details: "ALWAYS"

@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 public class NovaPropostaResponse {
 
+    private String id;
     private String nome;
     private String documento;
     private String email;
@@ -14,6 +15,7 @@ public class NovaPropostaResponse {
     private String propostaStatus;
 
     public NovaPropostaResponse(Proposta proposta){
+        id = proposta.getId().toString();
         nome = proposta.getNome();
         documento = proposta.getDocumento();
         email = proposta.getEmail();
@@ -21,6 +23,10 @@ public class NovaPropostaResponse {
         endereco = proposta.getEndereco();
         updateAt = proposta.getUpdatedAt();
         propostaStatus = proposta.getPropostaStatus().toString();
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getNome() {
