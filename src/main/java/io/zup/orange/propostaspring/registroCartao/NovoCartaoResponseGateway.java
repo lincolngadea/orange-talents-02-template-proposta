@@ -5,6 +5,7 @@ import io.zup.orange.propostaspring.registroCartao.bloqueios.Bloqueios;
 import io.zup.orange.propostaspring.registroCartao.carteiras.Carteiras;
 import io.zup.orange.propostaspring.registroCartao.parcelas.Parcelas;
 import io.zup.orange.propostaspring.registroCartao.vencimento.Vencimento;
+import io.zup.orange.propostaspring.registroProposta.Proposta;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -82,5 +83,9 @@ public class NovoCartaoResponseGateway {
                 ", vencimento=" + vencimento +
                 ", idProposta='" + idProposta + '\'' +
                 '}';
+    }
+
+    public Cartao toModel(Proposta proposta) {
+        return new Cartao(id,proposta.getDocumento(),titular,proposta.getId().toString());
     }
 }

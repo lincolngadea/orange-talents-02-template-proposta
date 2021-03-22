@@ -1,6 +1,7 @@
 package io.zup.orange.propostaspring.registroProposta;
 
 import io.zup.orange.propostaspring.compartilhado.annotations.CPFouCNPJ;
+import io.zup.orange.propostaspring.registroCartao.Cartao;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -9,7 +10,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.UUID;
 
 @Entity
@@ -18,6 +18,7 @@ public class Proposta {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, unique = true, nullable = false)
+    @org.hibernate.annotations.Type(type="uuid-char")
     private UUID id;
 
     @NotBlank
@@ -46,6 +47,9 @@ public class Proposta {
     @Enumerated(EnumType.STRING)
     private PropostaStatus propostaStatus = PropostaStatus.NAO_ELEGIVEL;
 
+    private String cartao;
+    private LocalDateTime atualizadaEm;
+
 //    private List<Cartao> cartaoList = new ArrayList<>();
 
     @Deprecated
@@ -62,6 +66,14 @@ public class Proposta {
         this.email = email;
         this.salario = salario;
         this.endereco = endereco;
+    }
+
+    public LocalDateTime getAtualizadaEm() {
+        return atualizadaEm;
+    }
+
+    public String getCartao() {
+        return cartao;
     }
 
     public UUID getId() {
@@ -100,5 +112,15 @@ public class Proposta {
     public void updateStatus(PropostaStatus status) {
         this.propostaStatus = status;
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public void adicionaCartao(@NotNull Cartao cartao) {
+        this.cartao = cartao.getId();
+        this.concluiProposta();
+    }
+
+    public void concluiProposta() {
+        this.atualizadaEm = LocalDateTime.now();
+        this.propostaStatus = PropostaStatus.CONCLUIDA;
     }
 }

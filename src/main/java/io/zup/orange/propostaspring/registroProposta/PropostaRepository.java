@@ -3,6 +3,8 @@ package io.zup.orange.propostaspring.registroProposta;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -18,4 +20,6 @@ public interface PropostaRepository extends JpaRepository<Proposta, UUID> {
     Object findByDocumento(String documento);
 
     Optional<Proposta> findById(UUID id);
+
+    List<Proposta> findByPropostaStatus(PropostaStatus status);
 }

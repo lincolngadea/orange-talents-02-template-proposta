@@ -26,8 +26,6 @@ public class Cartao {
     @Column(name = "idProposta", updatable = false, nullable = false)
     private String idProposta;
 
-
-
     @Deprecated
     public Cartao() {
     }
