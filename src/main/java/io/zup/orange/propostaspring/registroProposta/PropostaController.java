@@ -10,27 +10,25 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
 public class PropostaController {
 
+    private final Logger logger = LoggerFactory.getLogger(Logback.class);
     @Autowired
     private PropostaRepository propostaRepository;
     @Autowired
     private AnaliseFinanceiraDeClientes analisaCliente;
-
-    private final Logger logger = LoggerFactory.getLogger(Logback.class);
 
     @PostMapping("/proposta")
     @Transactional
@@ -57,8 +55,18 @@ public class PropostaController {
         return ResponseEntity.created(location).body(new NovaPropostaResponse(proposta));
     }
 
-    private PropostaStatus submetePropostaParaAnalise(Proposta proposta) {
+    @GetMapping("proposta/{id}")
+    public ResponseEntity<NovaPropostaResponse> buscaPropostaPorStatus(@PathVariable("id") UUID id){
 
+        Optional<Proposta> byStatus = propostaRepository.findById(id);
+        if(byStatus.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(new NovaPropostaResponse(byStatus.get()));
+    }
+
+    //Método para submeter proposta e definir status
+    private PropostaStatus submetePropostaParaAnalise(Proposta proposta) {
         try {
             SubmetePropostaAnaliseRequest requisicao = new SubmetePropostaAnaliseRequest(proposta);
             SubmetePropostaAnaliseResponse resposta = analisaCliente.submeterParaAnalise(requisicao);
