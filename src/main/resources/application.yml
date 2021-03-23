@@ -11,15 +11,15 @@ spring:
       minimum-idle: 10
       maximum-pool-size: 20
     plataform: postgres
-    url: jdbc:postgresql://localhost:5432/keycloak
-    username: keycloak
-    password: password
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:5432/${DB_DATABASE:keycloak}
+    username: ${DB_USER:keycloak}
+    password: ${DB_PASS:password}
   jpa:
     hibernate:
       ddl-auto: update
 
-uri_analise_financeira: "http://localhost:9999/"
-uri_cartao: "http://localhost:8888/"
+uri_analise_financeira: ${URI_ANALISE:http://localhost:9999/}
+uri_cartao: ${URI_CARTAO:http://localhost:8888/}"
 
 feign:
   client:
@@ -35,7 +35,6 @@ management:
   endpoints:
     web:
       cors:
-        allowed-origins: "http://localhost:9999/"
         allowed-methods: "GET"
   endpoint:
     health:
