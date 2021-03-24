@@ -25,7 +25,7 @@ spring:
           jwk-set-uri: ${KEYCLOAK_JWKS_URI:http://localhost:18080/auth/realms/cartao-proposta/protocol/openid-connect/certs}
 
 uri_analise_financeira: ${URI_ANALISE:http://localhost:9999/}
-uri_cartao: ${URI_CARTAO:http://localhost:8888/}"
+uri_cartao: http://localhost:8888/
 
 feign:
   client:
@@ -45,9 +45,6 @@ management:
   endpoint:
     health:
       show-details: "ALWAYS"
-
-
-
 
 #loggin:
 #  level:

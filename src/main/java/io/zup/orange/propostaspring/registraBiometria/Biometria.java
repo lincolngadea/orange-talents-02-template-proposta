@@ -6,6 +6,7 @@ import org.springframework.util.Assert;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -14,6 +15,8 @@ public class Biometria {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private LocalDateTime momentoDaCriacao = LocalDateTime.now();
 
     @NotBlank
     @Column(name = "fingerprint", updatable = true, nullable = false, unique = true)
@@ -36,6 +39,10 @@ public class Biometria {
 
         this.fingerPrint = fingerPrint;
         this.cartao = cartao;
+    }
+
+    public LocalDateTime getMomentoDaCriacao() {
+        return momentoDaCriacao;
     }
 
     public Long getId() {

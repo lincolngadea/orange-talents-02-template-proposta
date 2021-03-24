@@ -2,6 +2,7 @@ package io.zup.orange.propostaspring.registroProposta;
 
 import io.zup.orange.propostaspring.compartilhado.annotations.CPFouCNPJ;
 import io.zup.orange.propostaspring.registroCartao.Cartao;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -18,7 +19,7 @@ public class Proposta {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, unique = true, nullable = false)
-    @org.hibernate.annotations.Type(type="uuid-char")
+    @Type(type="uuid-char")
     private UUID id;
 
     @NotBlank

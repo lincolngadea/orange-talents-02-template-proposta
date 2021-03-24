@@ -9,11 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 
@@ -21,9 +22,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @SpringBootTest
-@AutoConfigureDataJpa
+@Transactional
 @AutoConfigureMockMvc
-class PropostaControllerTest {
+@ActiveProfiles("test")
+public class PropostaControllerTest {
 
     static String URI_API = "/api/proposta";
 
@@ -34,8 +36,8 @@ class PropostaControllerTest {
     MockMvc mvc;
 
     @Test
-    @Transactional
     @DisplayName("Deve criar uma proposta e retornar código 201 com URI criada no Header")
+    @WithMockUser
     void criaPropostaTest() throws Exception{
         Proposta proposta = new Proposta(
                 "Usuario",
@@ -47,6 +49,7 @@ class PropostaControllerTest {
         String json = new ObjectMapper().writeValueAsString(proposta);
 
         MockHttpServletRequestBuilder builder = MockBuilder.run(URI_API, json);
+
         MvcResult mvcResult = mvc.perform(builder).andExpect(status().isCreated()).andReturn();
 
         Proposta byDocumento = (Proposta) propostaRepository.findByDocumento("186.375.330-35");

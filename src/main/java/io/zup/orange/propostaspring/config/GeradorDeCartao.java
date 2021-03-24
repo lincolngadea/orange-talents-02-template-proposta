@@ -3,8 +3,8 @@ package io.zup.orange.propostaspring.config;
 import io.zup.orange.propostaspring.compartilhado.log.Logback;
 import io.zup.orange.propostaspring.registroCartao.Cartao;
 import io.zup.orange.propostaspring.registroCartao.CartaoGateway;
-import io.zup.orange.propostaspring.registroCartao.NovoCartaoRequestGateway;
-import io.zup.orange.propostaspring.registroCartao.NovoCartaoResponseGateway;
+import io.zup.orange.propostaspring.registroCartao.NovoCartaoRequest;
+import io.zup.orange.propostaspring.registroCartao.NovoCartaoResponse;
 import io.zup.orange.propostaspring.registroProposta.Proposta;
 import io.zup.orange.propostaspring.registroProposta.PropostaRepository;
 import io.zup.orange.propostaspring.registroProposta.PropostaStatus;
@@ -30,16 +30,16 @@ public class GeradorDeCartao {
     @Autowired
     private CartaoGateway clienteCartao;
 
-    @Scheduled(fixedDelay = 1800000)//atualiza a cada 30 minutos
+    @Scheduled(fixedDelay = 10000)//atualiza a cada 30 minutos
     @Transactional
     public void solicitaCartao() {
         propostasPendenteCartao.addAll(propostaRepository.findByPropostaStatus(PropostaStatus.ELEGIVEL));
         propostasPendenteCartao.forEach(proposta -> {
             logger.info("Proposta - {}", proposta.toString());
-            NovoCartaoRequestGateway cartaoRequest = new NovoCartaoRequestGateway(
+            NovoCartaoRequest cartaoRequest = new NovoCartaoRequest(
                     proposta.getDocumento(), proposta.getNome(), proposta.getId().toString());
             try {
-                NovoCartaoResponseGateway resposta = clienteCartao.salvarCartao(cartaoRequest);
+                NovoCartaoResponse resposta = clienteCartao.salvarCartao(cartaoRequest);
                 Cartao cartao = resposta.toModel(proposta);
                 logger.info("Cartao - {}", cartao.toString());
                 proposta.adicionaCartao(cartao);

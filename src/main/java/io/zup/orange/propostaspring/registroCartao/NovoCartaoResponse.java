@@ -1,7 +1,7 @@
 package io.zup.orange.propostaspring.registroCartao;
 
 import io.zup.orange.propostaspring.registroCartao.avisos.Avisos;
-import io.zup.orange.propostaspring.registroCartao.bloqueios.Bloqueios;
+import io.zup.orange.propostaspring.registroCartao.bloqueio.Bloqueios;
 import io.zup.orange.propostaspring.registroCartao.carteiras.Carteiras;
 import io.zup.orange.propostaspring.registroCartao.parcelas.Parcelas;
 import io.zup.orange.propostaspring.registroCartao.vencimento.Vencimento;
@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class NovoCartaoResponseGateway {
+public class NovoCartaoResponse {
     private String id;
     private LocalDateTime emitidoEm;
     private String titular;
@@ -23,6 +23,23 @@ public class NovoCartaoResponseGateway {
     private BigDecimal renegociacao;
     private Vencimento vencimento;
     private String idProposta;
+
+    public NovoCartaoResponse(Cartao cartao){
+        id = cartao.getId();
+        emitidoEm = cartao.getEmitidoEm();
+        titular = cartao.getNome();
+        bloqueios = cartao.getBloqueios();
+        avisos = cartao.getAvisos();
+        carteiras = cartao.getCarteiras();
+        parcelas = cartao.getParcelas();
+        limite = cartao.getLimite();
+        renegociacao = cartao.getRenegociacao();
+        vencimento = cartao.getVencimento();
+        idProposta = cartao.getIdProposta();
+
+
+
+    }
 
     public Vencimento getVencimento() {
         return vencimento;
