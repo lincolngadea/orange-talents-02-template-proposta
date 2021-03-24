@@ -3,7 +3,7 @@ package io.zup.orange.propostaspring.registroProposta;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class NovaPropostaResponse {
+public class PropostaResponse {
 
     private String id;
     private String nome;
@@ -14,7 +14,7 @@ public class NovaPropostaResponse {
     private LocalDateTime updateAt;
     private String propostaStatus;
 
-    public NovaPropostaResponse(Proposta proposta){
+    public PropostaResponse(Proposta proposta){
         id = proposta.getId().toString();
         nome = proposta.getNome();
         documento = proposta.getDocumento();
@@ -55,5 +55,19 @@ public class NovaPropostaResponse {
 
     public String getPropostaStatus() {
         return propostaStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "PropostaResponse{" +
+                "id='" + id + '\'' +
+                ", nome='" + nome + '\'' +
+                ", documento='" + documento + '\'' +
+                ", email='" + email + '\'' +
+                ", salario=" + salario +
+                ", endereco='" + endereco + '\'' +
+                ", updateAt=" + updateAt +
+                ", propostaStatus='" + propostaStatus + '\'' +
+                '}';
     }
 }

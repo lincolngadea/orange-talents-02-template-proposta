@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.persistence.EntityManager;
@@ -33,13 +32,18 @@ public class BiometriaController {
             UriComponentsBuilder builder){
 
         Optional<Cartao> cartao = Optional.ofNullable(manager.find(Cartao.class, idCartao));
-        logger.info("Dados do Cartão:{}",cartao);
+
+        logger.info("Dados do Cartão:{}",cartao.get());
+
         if(cartao.isEmpty()){
             return ResponseEntity.notFound().build();
         }
 
         Biometria biometria = request.toModel(cartao.get());
-        logger.info("Dados da Biometria:{}",biometria);
+
+        logger.info("ID do Cartão:{}",biometria.getCartao());
+        logger.info("Dados da Biometria:{}",biometria.getFingerPrint());
+
         manager.persist(biometria);
 
         URI location = builder.path("/api/cartao/{id}/biometria").build(biometria.getFingerPrint());

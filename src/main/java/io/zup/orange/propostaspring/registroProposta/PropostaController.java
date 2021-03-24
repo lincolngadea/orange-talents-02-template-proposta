@@ -17,6 +17,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -52,17 +54,27 @@ public class PropostaController {
                 proposta.getDocumento(),proposta.getSalario());
 
         URI location = builder.path("/api/proposta/{id}").build(proposta.getId());
-        return ResponseEntity.created(location).body(new NovaPropostaResponse(proposta));
+        return ResponseEntity.created(location).body(new PropostaResponse(proposta));
     }
 
     @GetMapping("proposta/{id}")
-    public ResponseEntity<NovaPropostaResponse> buscaPropostaPorStatus(@PathVariable("id") UUID id){
+    public ResponseEntity<PropostaResponse> buscaPropostaPorStatus(@PathVariable("id") UUID id){
 
         Optional<Proposta> byStatus = propostaRepository.findById(id);
         if(byStatus.isEmpty()){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(new NovaPropostaResponse(byStatus.get()));
+        return ResponseEntity.ok(new PropostaResponse(byStatus.get()));
+    }
+
+    @GetMapping("/propostas")
+    public ResponseEntity<?> listaPropostas(){
+
+        List<Proposta> propostas = propostaRepository.findAllProposta();
+        if(propostas.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(propostas);
     }
 
     //Método para submeter proposta e definir status

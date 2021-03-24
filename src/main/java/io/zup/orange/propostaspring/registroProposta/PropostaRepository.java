@@ -29,5 +29,6 @@ public interface PropostaRepository extends JpaRepository<Proposta, UUID> {
     @Query("SELECT p FROM Proposta p WHERE p.propostaStatus = :status")
     Optional<Proposta> findByProposta(@Param("status") PropostaStatus status);
 
-
+    @Query("SELECT p FROM Proposta p")
+    List<Proposta> findAllProposta();
 }

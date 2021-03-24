@@ -17,6 +17,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:18080/auth/realms/cartao-proposta}
+          jwk-set-uri: ${KEYCLOAK_JWKS_URI:http://localhost:18080/auth/realms/cartao-proposta/protocol/openid-connect/certs}
 
 uri_analise_financeira: ${URI_ANALISE:http://localhost:9999/}
 uri_cartao: ${URI_CARTAO:http://localhost:8888/}"
@@ -39,3 +45,12 @@ management:
   endpoint:
     health:
       show-details: "ALWAYS"
+
+
+
+
+#loggin:
+#  level:
+#    org:
+#      sepringframework:
+#        security: DEBUG
