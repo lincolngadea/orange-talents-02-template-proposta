@@ -64,7 +64,7 @@ public class CartaoController {
     }
 
     @GetMapping("/cartoes/{id}")
-    public NovoCartaoResponse cartaoById(@PathVariable("id") String id){
+    public NovoCartaoResponseGateway cartaoById(@PathVariable("id") String id){
         return cartaoGateway.cartaoById(id);
     }
 }

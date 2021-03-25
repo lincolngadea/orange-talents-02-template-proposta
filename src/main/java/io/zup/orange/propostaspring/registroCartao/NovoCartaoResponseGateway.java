@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class NovoCartaoResponse {
+public class NovoCartaoResponseGateway {
     private String id;
     private LocalDateTime emitidoEm;
     private String titular;
@@ -24,19 +24,7 @@ public class NovoCartaoResponse {
     private Vencimento vencimento;
     private String idProposta;
 
-    public NovoCartaoResponse(Cartao cartao){
-        id = cartao.getId();
-        emitidoEm = cartao.getEmitidoEm();
-        titular = cartao.getNome();
-        bloqueios = cartao.getBloqueios();
-        avisos = cartao.getAvisos();
-        carteiras = cartao.getCarteiras();
-        parcelas = cartao.getParcelas();
-        limite = cartao.getLimite();
-        renegociacao = cartao.getRenegociacao();
-        vencimento = cartao.getVencimento();
-        idProposta = cartao.getIdProposta();
-    }
+
 
     public Vencimento getVencimento() {
         return vencimento;

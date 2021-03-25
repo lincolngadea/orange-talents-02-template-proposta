@@ -4,7 +4,7 @@ import io.zup.orange.propostaspring.compartilhado.log.Logback;
 import io.zup.orange.propostaspring.registroCartao.Cartao;
 import io.zup.orange.propostaspring.registroCartao.CartaoGateway;
 import io.zup.orange.propostaspring.registroCartao.NovoCartaoRequest;
-import io.zup.orange.propostaspring.registroCartao.NovoCartaoResponse;
+import io.zup.orange.propostaspring.registroCartao.NovoCartaoResponseGateway;
 import io.zup.orange.propostaspring.registroProposta.Proposta;
 import io.zup.orange.propostaspring.registroProposta.PropostaRepository;
 import io.zup.orange.propostaspring.registroProposta.PropostaStatus;
@@ -39,7 +39,7 @@ public class GeradorDeCartao {
             NovoCartaoRequest cartaoRequest = new NovoCartaoRequest(
                     proposta.getDocumento(), proposta.getNome(), proposta.getId().toString());
             try {
-                NovoCartaoResponse resposta = clienteCartao.salvarCartao(cartaoRequest);
+                NovoCartaoResponseGateway resposta = clienteCartao.salvarCartao(cartaoRequest);
                 Cartao cartao = resposta.toModel(proposta);
                 logger.info("Cartao - {}", cartao.toString());
                 proposta.adicionaCartao(cartao);
