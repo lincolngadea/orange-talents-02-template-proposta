@@ -2,9 +2,9 @@ package io.zup.orange.propostaspring.registroProposta;
 
 import feign.FeignException;
 import io.zup.orange.propostaspring.compartilhado.log.Logback;
-import io.zup.orange.propostaspring.registroProposta.analiseFinanceira.AnaliseFinanceiraDeClientes;
-import io.zup.orange.propostaspring.registroProposta.analiseFinanceira.SubmetePropostaAnaliseRequest;
-import io.zup.orange.propostaspring.registroProposta.analiseFinanceira.SubmetePropostaAnaliseResponse;
+import io.zup.orange.propostaspring.registroProposta.analiseDeProposta.AnaliseDeProposta;
+import io.zup.orange.propostaspring.registroProposta.analiseDeProposta.AnaliseDePropostaRequest;
+import io.zup.orange.propostaspring.registroProposta.analiseDeProposta.AnaliseDePropostaResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,7 +29,7 @@ public class PropostaController {
     @Autowired
     private PropostaRepository propostaRepository;
     @Autowired
-    private AnaliseFinanceiraDeClientes analisaCliente;
+    private AnaliseDeProposta analisaCliente;
 
     @PostMapping("/proposta")
     @Transactional
@@ -80,8 +79,8 @@ public class PropostaController {
     //Método para submeter proposta e definir status
     private PropostaStatus submetePropostaParaAnalise(Proposta proposta) {
         try {
-            SubmetePropostaAnaliseRequest requisicao = new SubmetePropostaAnaliseRequest(proposta);
-            SubmetePropostaAnaliseResponse resposta = analisaCliente.submeterParaAnalise(requisicao);
+            AnaliseDePropostaRequest requisicao = new AnaliseDePropostaRequest(proposta);
+            AnaliseDePropostaResponse resposta = analisaCliente.submeterParaAnalise(requisicao);
             return resposta.toModel();
         }catch (FeignException.UnprocessableEntity e){
             return PropostaStatus.NAO_ELEGIVEL;

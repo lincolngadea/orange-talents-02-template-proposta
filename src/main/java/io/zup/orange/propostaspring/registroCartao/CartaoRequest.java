@@ -1,17 +1,10 @@
 package io.zup.orange.propostaspring.registroCartao;
 
-import io.zup.orange.propostaspring.registroProposta.Proposta;
-import org.springframework.util.Assert;
-
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.UUID;
 
-public class NovoCartaoRequest {
+public class CartaoRequest {
 
-    private String id;
     @NotBlank
     private String documento;
     @NotBlank
@@ -19,7 +12,7 @@ public class NovoCartaoRequest {
     @NotNull
     private String idProposta;
 
-    public NovoCartaoRequest(String documento, String nome, String idProposta) {
+    public CartaoRequest(String documento, String nome, String idProposta) {
         this.documento = documento;
         this.nome = nome;
         this.idProposta = idProposta;
@@ -37,8 +30,12 @@ public class NovoCartaoRequest {
         return idProposta;
     }
 
-    public Cartao toModel(String idCartao){
-        this.id = idCartao;
-        return new Cartao(id,documento,nome,idProposta);
+    @Override
+    public String toString() {
+        return "CartaoRequest{" +
+                "documento='" + documento + '\'' +
+                ", nome='" + nome + '\'' +
+                ", idProposta='" + idProposta + '\'' +
+                '}';
     }
 }

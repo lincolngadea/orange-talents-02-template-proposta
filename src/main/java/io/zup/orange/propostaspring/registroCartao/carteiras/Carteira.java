@@ -1,21 +1,22 @@
-package io.zup.orange.propostaspring.registroCartao.bloqueio;
+package io.zup.orange.propostaspring.registroCartao.carteiras;
 
 import io.zup.orange.propostaspring.registroCartao.Cartao;
 
 import javax.persistence.*;
 
 @Entity
-public class Bloqueios {
+public class Carteira {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     private Cartao cartao;
 
-    public Bloqueios() {
+    public Carteira() {
     }
 
-    public Bloqueios( Cartao cartao) {
+    public Carteira(Cartao cartao) {
         this.cartao = cartao;
     }
 

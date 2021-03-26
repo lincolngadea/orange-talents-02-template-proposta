@@ -1,9 +1,9 @@
 package io.zup.orange.propostaspring.registroCartao;
 
-import io.zup.orange.propostaspring.registroCartao.avisos.Avisos;
-import io.zup.orange.propostaspring.registroCartao.bloqueio.Bloqueios;
-import io.zup.orange.propostaspring.registroCartao.carteiras.Carteiras;
-import io.zup.orange.propostaspring.registroCartao.parcelas.Parcelas;
+import io.zup.orange.propostaspring.registroCartao.avisos.Aviso;
+import io.zup.orange.propostaspring.registroCartao.bloqueios.Bloqueio;
+import io.zup.orange.propostaspring.registroCartao.carteiras.Carteira;
+import io.zup.orange.propostaspring.registroCartao.parcelas.Parcela;
 import io.zup.orange.propostaspring.registroCartao.vencimento.Vencimento;
 import io.zup.orange.propostaspring.registroProposta.Proposta;
 
@@ -11,34 +11,33 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class NovoCartaoResponseGateway {
-    private String id;
+public class CartaoResponseGateway {
+
+    private String id; //número do cartao
     private LocalDateTime emitidoEm;
     private String titular;
-    private List<Bloqueios> bloqueios;
-    private List<Avisos> avisos;
-    private List<Carteiras> carteiras;
-    private List<Parcelas> parcelas;
+    private List<Bloqueio> bloqueios;
+    private List<Aviso> avisos;
+    private List<Carteira> carteiras;
+    private List<Parcela> parcelas;
     private BigDecimal limite;
     private BigDecimal renegociacao;
     private Vencimento vencimento;
     private String idProposta;
 
-
-
     public Vencimento getVencimento() {
         return vencimento;
     }
 
-    public List<Avisos> getAvisos() {
+    public List<Aviso> getAvisos() {
         return avisos;
     }
 
-    public List<Carteiras> getCarteiras() {
+    public List<Carteira> getCarteiras() {
         return carteiras;
     }
 
-    public List<Parcelas> getParcelas() {
+    public List<Parcela> getParcelas() {
         return parcelas;
     }
 
@@ -62,7 +61,7 @@ public class NovoCartaoResponseGateway {
         return titular;
     }
 
-    public List<Bloqueios> getBloqueios() {
+    public List<Bloqueio> getBloqueios() {
         return bloqueios;
     }
 
@@ -88,6 +87,10 @@ public class NovoCartaoResponseGateway {
     }
 
     public Cartao toModel(Proposta proposta) {
-        return new Cartao(id,proposta.getDocumento(),titular,proposta.getId().toString());
+        return new Cartao(proposta.getDocumento(),titular,idProposta);
+    }
+
+    public String toProposta(){
+        return id;
     }
 }

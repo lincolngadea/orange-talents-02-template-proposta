@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 public interface CartaoGateway {
 
     @PostMapping("/api/cartoes")
-    public NovoCartaoResponseGateway salvarCartao(NovoCartaoRequest requestGateway);
+    public CartaoResponseGateway salvarCartao(CartaoRequest requestGateway);
 
     @GetMapping("/api/cartoes?idProposta={id}")
-    public NovoCartaoResponseGateway cartaoById(@PathVariable("id") String id);
+    public CartaoResponseGateway cartaoById(@PathVariable("id") String id);
 }

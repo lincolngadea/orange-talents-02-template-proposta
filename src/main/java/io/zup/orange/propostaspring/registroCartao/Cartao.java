@@ -1,120 +1,110 @@
 package io.zup.orange.propostaspring.registroCartao;
 
-import io.zup.orange.propostaspring.registraBiometria.Biometria;
-import io.zup.orange.propostaspring.registroCartao.avisos.Avisos;
-import io.zup.orange.propostaspring.registroCartao.bloqueio.BloqueioStatus;
-import io.zup.orange.propostaspring.registroCartao.bloqueio.Bloqueios;
-import io.zup.orange.propostaspring.registroCartao.carteiras.Carteiras;
-import io.zup.orange.propostaspring.registroCartao.parcelas.Parcelas;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.zup.orange.propostaspring.compartilhado.annotations.ValorUnico;
+import io.zup.orange.propostaspring.registroCartao.avisos.Aviso;
+import io.zup.orange.propostaspring.registroCartao.bloqueios.Bloqueio;
+import io.zup.orange.propostaspring.registroCartao.carteiras.Carteira;
+import io.zup.orange.propostaspring.registroCartao.parcelas.Parcela;
 import io.zup.orange.propostaspring.registroCartao.vencimento.Vencimento;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Objects;
 
 @Entity
 public class Cartao {
-
-    @NotNull
     @Id
-    @Column(name = "id", unique = true, nullable = false)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idCartao", nullable = false)
+    private Long idCartao;
+
+    @Column(name = "numeroDoCartao",unique = true,nullable = false)
+    private String numeroDoCartao;
+
+    @Column(nullable = false)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @JsonFormat(pattern = "yyy-MM-dd@HH:mm:ss", shape = JsonFormat.Shape.STRING, timezone = "America/Sao_Paulo")
+    private LocalDateTime emitidoEm = LocalDateTime.now();
+
+    @NotBlank
+    @Column(name = "nome",updatable = true, nullable = false)
+    private String titular;
+
+    @OneToMany(mappedBy = "cartao", cascade = CascadeType.MERGE)
+    private List<Bloqueio> bloqueios;
+
+    @OneToMany(mappedBy = "cartao", cascade = CascadeType.MERGE)
+    private List<Aviso> avisos;
+
+    @OneToMany(mappedBy = "cartao", cascade = CascadeType.MERGE)
+    private List<Carteira> carteiras;
+
+    @OneToMany(mappedBy = "cartao", cascade = CascadeType.MERGE)
+    private List<Parcela> parcelas;
+
+    private BigDecimal limite;
+    private BigDecimal renegociacao;
+
+    @OneToOne(cascade = CascadeType.MERGE)
+    private Vencimento vencimento;
 
     @NotBlank
     @Column(name = "documento", updatable = false, nullable = false)
     private String documento;
 
     @NotBlank
-    @Column(name = "nome",updatable = true, nullable = false)
-    private String nome;
-
-    @NotNull
     @Column(name = "idProposta", updatable = false, nullable = false)
     private String idProposta;
 
-    @OneToMany(mappedBy = "cartao")
-    private Set<Biometria> biometria = new HashSet<>();
-
-    @Enumerated(EnumType.STRING)
-    private BloqueioStatus bloqueioStatus = BloqueioStatus.BLOQUEADO;
-
-    @OneToMany
-    private List<Bloqueios> bloqueios;
-    @OneToMany
-    private List<Avisos> avisos;
-    @OneToMany
-    private List<Carteiras> carteiras;
-    @OneToMany
-    private List<Parcelas> parcelas;
-    @OneToOne
-    private Vencimento vencimento;
-
-    private BigDecimal limite;
-    private BigDecimal renegociacao;
-
-    private LocalDateTime emitidoEm = LocalDateTime.now();
 
     @Deprecated
     public Cartao() {
     }
 
     public Cartao(
-            @NotBlank String id,
             @NotBlank String documento,
-            @NotBlank String nome,
+            @NotBlank String titular,
             @NotNull String idProposta) {
-        this.id = id;
         this.documento = documento;
-        this.nome = nome;
+        this.titular = titular;
         this.idProposta = idProposta;
     }
 
-    public Set<Biometria> getBiometria() {
-        return biometria;
+    public String getNumeroDoCartao() {
+        return numeroDoCartao;
     }
 
-    public BloqueioStatus getBloqueioStatus() {
-        return bloqueioStatus;
+    public Long getIdCartao() {
+        return idCartao;
     }
 
     public LocalDateTime getEmitidoEm() {
         return emitidoEm;
     }
 
-    public List<Bloqueios> getBloqueios() {
+    public String getTitular() {
+        return titular;
+    }
+
+    public List<Bloqueio> getBloqueios() {
         return bloqueios;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public String getDocumento() {
-        return documento;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public String getIdProposta() {
-        return idProposta;
-    }
-
-    public List<Avisos> getAvisos() {
+    public List<Aviso> getAvisos() {
         return avisos;
     }
 
-    public List<Carteiras> getCarteiras() {
+    public List<Carteira> getCarteiras() {
         return carteiras;
     }
 
-    public List<Parcelas> getParcelas() {
+    public List<Parcela> getParcelas() {
         return parcelas;
     }
 
@@ -128,5 +118,45 @@ public class Cartao {
 
     public Vencimento getVencimento() {
         return vencimento;
+    }
+
+    public String getDocumento() {
+        return documento;
+    }
+
+    public String getIdProposta() {
+        return idProposta;
+    }
+
+    @Override
+    public String toString() {
+        return "Cartao{" +
+                "idCartao=" + idCartao +
+                ", numeroDoCartao='" + numeroDoCartao + '\'' +
+                ", emitidoEm=" + emitidoEm +
+                ", titular='" + titular + '\'' +
+                ", bloqueios=" + bloqueios +
+                ", avisos=" + avisos +
+                ", carteiras=" + carteiras +
+                ", parcelas=" + parcelas +
+                ", limite=" + limite +
+                ", renegociacao=" + renegociacao +
+                ", vencimento=" + vencimento +
+                ", documento='" + documento + '\'' +
+                ", idProposta='" + idProposta + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cartao cartao = (Cartao) o;
+        return numeroDoCartao.equals(cartao.numeroDoCartao) && titular.equals(cartao.titular) && documento.equals(cartao.documento) && idProposta.equals(cartao.idProposta);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(numeroDoCartao, titular, documento, idProposta);
     }
 }

@@ -1,16 +1,14 @@
-package io.zup.orange.propostaspring.registroProposta.analiseFinanceira;
+package io.zup.orange.propostaspring.registroProposta.analiseDeProposta;
 
 import io.zup.orange.propostaspring.registroProposta.Proposta;
 
-import java.util.UUID;
-
-public class SubmetePropostaAnaliseRequest {
+public class AnaliseDePropostaRequest {
 
     private String documento;
     private String nome;
     private String idProposta;
 
-    public SubmetePropostaAnaliseRequest(Proposta proposta) {
+    public AnaliseDePropostaRequest(Proposta proposta) {
         documento = proposta.getDocumento();
         nome = proposta.getNome();
         idProposta = proposta.getId().toString();

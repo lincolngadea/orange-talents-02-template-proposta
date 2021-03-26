@@ -1,10 +1,9 @@
-package io.zup.orange.propostaspring.registroProposta.analiseFinanceira;
+package io.zup.orange.propostaspring.registroProposta.analiseDeProposta;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.zup.orange.propostaspring.registroProposta.PropostaStatus;
-import org.springframework.data.web.JsonPath;
 
-public class SubmetePropostaAnaliseResponse {
+public class AnaliseDePropostaResponse {
 
     private String documento;
     private String nome;

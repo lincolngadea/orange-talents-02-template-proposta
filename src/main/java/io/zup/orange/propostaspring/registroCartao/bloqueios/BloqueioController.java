@@ -1,4 +1,4 @@
-package io.zup.orange.propostaspring.registroCartao.bloqueio;
+package io.zup.orange.propostaspring.registroCartao.bloqueios;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

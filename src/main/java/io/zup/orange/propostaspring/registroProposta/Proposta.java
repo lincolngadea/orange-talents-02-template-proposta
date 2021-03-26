@@ -2,6 +2,7 @@ package io.zup.orange.propostaspring.registroProposta;
 
 import io.zup.orange.propostaspring.compartilhado.annotations.CPFouCNPJ;
 import io.zup.orange.propostaspring.registroCartao.Cartao;
+import io.zup.orange.propostaspring.registroCartao.CartaoResponseGateway;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -115,13 +116,29 @@ public class Proposta {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public void adicionaCartao(@NotNull Cartao cartao) {
-        this.cartao = cartao.getId();
+    public void adicionaCartao(@NotNull String numeroDoCartao) {
+        this.cartao = numeroDoCartao;
         this.concluiProposta();
     }
 
     public void concluiProposta() {
         this.atualizadaEm = LocalDateTime.now();
         this.propostaStatus = PropostaStatus.CONCLUIDA;
+    }
+
+    @Override
+    public String toString() {
+        return "Proposta{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", documento='" + documento + '\'' +
+                ", email='" + email + '\'' +
+                ", salario=" + salario +
+                ", endereco='" + endereco + '\'' +
+                ", updatedAt=" + updatedAt +
+                ", propostaStatus=" + propostaStatus +
+                ", cartao='" + cartao + '\'' +
+                ", atualizadaEm=" + atualizadaEm +
+                '}';
     }
 }

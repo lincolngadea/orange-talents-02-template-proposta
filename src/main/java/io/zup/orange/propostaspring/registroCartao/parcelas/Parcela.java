@@ -1,21 +1,21 @@
-package io.zup.orange.propostaspring.registroCartao.avisos;
+package io.zup.orange.propostaspring.registroCartao.parcelas;
 
 import io.zup.orange.propostaspring.registroCartao.Cartao;
 
 import javax.persistence.*;
 
 @Entity
-public class Avisos {
+public class Parcela {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     private Cartao cartao;
 
-    public Avisos() {
+    public Parcela() {
     }
 
-    public Avisos( Cartao cartao) {
+    public Parcela(Cartao cartao) {
         this.cartao = cartao;
     }
 
