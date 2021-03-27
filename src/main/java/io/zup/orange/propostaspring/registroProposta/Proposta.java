@@ -50,6 +50,7 @@ public class Proposta {
     private PropostaStatus propostaStatus = PropostaStatus.NAO_ELEGIVEL;
 
     private String cartao;
+
     private LocalDateTime atualizadaEm;
 
 //    private List<Cartao> cartaoList = new ArrayList<>();
@@ -120,6 +121,7 @@ public class Proposta {
         this.cartao = numeroDoCartao;
         this.concluiProposta();
     }
+
 
     public void concluiProposta() {
         this.atualizadaEm = LocalDateTime.now();

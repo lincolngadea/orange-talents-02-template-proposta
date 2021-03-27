@@ -2,6 +2,8 @@ package io.zup.orange.propostaspring.config;
 
 import io.zup.orange.propostaspring.compartilhado.log.Logback;
 import io.zup.orange.propostaspring.registroCartao.*;
+import io.zup.orange.propostaspring.registroCartao.vencimento.Vencimento;
+import io.zup.orange.propostaspring.registroCartao.vencimento.VencimentoRepository;
 import io.zup.orange.propostaspring.registroProposta.Proposta;
 import io.zup.orange.propostaspring.registroProposta.PropostaRepository;
 import io.zup.orange.propostaspring.registroProposta.PropostaStatus;
@@ -28,6 +30,8 @@ public class GeradorDeCartao {
     private CartaoRepository cartaoRepository;
     @Autowired
     private CartaoGateway clienteCartao;
+    @Autowired
+    private VencimentoRepository vencimentoRepository;
 
     @Scheduled(fixedDelay = 10000)//atualiza a cada 30 minutos
     @Transactional
@@ -57,10 +61,11 @@ public class GeradorDeCartao {
                     proposta.adicionaCartao(numeroDoCartao);
 
                     propostaRepository.save(proposta);
-                    logger.info("Cartao adicionado a proposta");
+                    logger.info("Iniciou gravação da proposta");
 
                     cartaoRepository.save(cartao);
-                    logger.info("Novo Cartão Criado");
+
+                    logger.info("Iniciou gravação do cartão");
 
                 } catch (Exception e) {
                     logger.error("Proposta - {}", proposta.toString());

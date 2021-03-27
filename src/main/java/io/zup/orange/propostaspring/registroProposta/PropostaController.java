@@ -53,7 +53,7 @@ public class PropostaController {
                 proposta.getDocumento(),proposta.getSalario());
 
         URI location = builder.path("/api/proposta/{id}").build(proposta.getId());
-        return ResponseEntity.created(location).body(new PropostaResponse(proposta));
+        return ResponseEntity.ok(location);
     }
 
     @GetMapping("proposta/{id}")

@@ -5,6 +5,7 @@ import io.zup.orange.propostaspring.registroCartao.bloqueios.Bloqueio;
 import io.zup.orange.propostaspring.registroCartao.carteiras.Carteira;
 import io.zup.orange.propostaspring.registroCartao.parcelas.Parcela;
 import io.zup.orange.propostaspring.registroCartao.vencimento.Vencimento;
+import io.zup.orange.propostaspring.registroCartao.vencimento.VencimentoResponseGateway;
 import io.zup.orange.propostaspring.registroProposta.Proposta;
 
 import java.math.BigDecimal;
@@ -22,10 +23,10 @@ public class CartaoResponseGateway {
     private List<Parcela> parcelas;
     private BigDecimal limite;
     private BigDecimal renegociacao;
-    private Vencimento vencimento;
+    private VencimentoResponseGateway vencimento;
     private String idProposta;
 
-    public Vencimento getVencimento() {
+    public VencimentoResponseGateway getVencimento() {
         return vencimento;
     }
 
@@ -69,6 +70,8 @@ public class CartaoResponseGateway {
         return idProposta;
     }
 
+
+
     @Override
     public String toString() {
         return "NovoCartaoResponseGateway{" +
@@ -87,7 +90,7 @@ public class CartaoResponseGateway {
     }
 
     public Cartao toModel(Proposta proposta) {
-        return new Cartao(proposta.getDocumento(),titular,idProposta);
+        return new Cartao(id,titular,limite,proposta.getDocumento(),idProposta, vencimento.toModel());
     }
 
     public String toProposta(){

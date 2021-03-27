@@ -24,7 +24,8 @@ public class Cartao {
     @Column(name = "idCartao", nullable = false)
     private Long idCartao;
 
-    @Column(name = "numeroDoCartao",unique = true,nullable = false)
+    @NotBlank
+    @Column(name = "numeroDoCartao",unique = true, nullable = true)
     private String numeroDoCartao;
 
     @Column(nullable = false)
@@ -48,10 +49,12 @@ public class Cartao {
     @OneToMany(mappedBy = "cartao", cascade = CascadeType.MERGE)
     private List<Parcela> parcelas;
 
+    @NotNull
+    @Column(name = "limite",nullable = false)
     private BigDecimal limite;
     private BigDecimal renegociacao;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Vencimento vencimento;
 
     @NotBlank
@@ -68,12 +71,18 @@ public class Cartao {
     }
 
     public Cartao(
-            @NotBlank String documento,
+            @NotBlank String numeroDoCartao,
             @NotBlank String titular,
-            @NotNull String idProposta) {
-        this.documento = documento;
+            @NotNull BigDecimal limite,
+            @NotBlank String documento,
+            @NotBlank String idProposta,
+            @NotNull Vencimento vencimento) {
+        this.numeroDoCartao = numeroDoCartao;
         this.titular = titular;
+        this.limite = limite;
+        this.documento = documento;
         this.idProposta = idProposta;
+        this.vencimento = vencimento;
     }
 
     public String getNumeroDoCartao() {

@@ -1,10 +1,11 @@
 package io.zup.orange.propostaspring.registroCartao.vencimento;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.Type;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -13,30 +14,50 @@ import java.util.UUID;
 public class Vencimento {
 
     @Id
-    @Type(type ="uuid-char")
-    private UUID id;
-    private Integer dia;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String idExterno;
+
+    private String dia;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @JsonFormat(pattern = "yyyy-MM-dd@HH:mm:ss", shape = JsonFormat.Shape.STRING, timezone = "America/Sao_Paulo")
     private LocalDateTime dataDeCriacao;
 
     @Deprecated
     public Vencimento() {
     }
 
-    public Vencimento(UUID id, Integer dia, LocalDateTime dataDeCriacao) {
-        this.id = id;
+    public Vencimento(String idExterno, String dia, LocalDateTime dataDeCriacao) {
+        this.idExterno = idExterno;
         this.dia = dia;
         this.dataDeCriacao = dataDeCriacao;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public Integer getDia() {
+    public String getIdExterno() {
+        return idExterno;
+    }
+
+    public String getDia() {
         return dia;
     }
 
     public LocalDateTime getDataDeCriacao() {
         return dataDeCriacao;
+    }
+
+    @Override
+    public String toString() {
+        return "Vencimento{" +
+                "id=" + id +
+                ", idExterno='" + idExterno + '\'' +
+                ", dia='" + dia + '\'' +
+                ", dataDeCriacao=" + dataDeCriacao +
+                '}';
     }
 }
