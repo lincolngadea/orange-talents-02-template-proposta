@@ -2,6 +2,7 @@ package io.zup.orange.propostaspring.registroCartao;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.zup.orange.propostaspring.compartilhado.annotations.ValorUnico;
+import io.zup.orange.propostaspring.registraBiometria.Biometria;
 import io.zup.orange.propostaspring.registroCartao.avisos.Aviso;
 import io.zup.orange.propostaspring.registroCartao.bloqueios.Bloqueio;
 import io.zup.orange.propostaspring.registroCartao.carteiras.Carteira;
@@ -64,7 +65,6 @@ public class Cartao {
     @NotBlank
     @Column(name = "idProposta", updatable = false, nullable = false)
     private String idProposta;
-
 
     @Deprecated
     public Cartao() {

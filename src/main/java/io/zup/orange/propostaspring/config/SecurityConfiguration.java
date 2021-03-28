@@ -13,11 +13,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests(authorizeRequests ->
-                authorizeRequests.anyRequest().authenticated())
-                        .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
-                        .csrf().disable()
-                        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
+                authorizeRequests
+                        .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
+                        .antMatchers(HttpMethod.POST,"/api/auth").permitAll()
+                        .antMatchers(HttpMethod.POST,"/api/auth/").permitAll()
+                        .antMatchers(HttpMethod.POST,"/api/auth/**").permitAll()
+                        .anyRequest().authenticated()
+        )
+                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
-
 }
