@@ -66,6 +66,9 @@ public class Cartao {
     @Column(name = "idProposta", updatable = false, nullable = false)
     private String idProposta;
 
+    @Enumerated(EnumType.STRING)
+    private StatusCartao statusCartao = StatusCartao.ATIVO;
+
     @Deprecated
     public Cartao() {
     }
@@ -167,5 +170,9 @@ public class Cartao {
     @Override
     public int hashCode() {
         return Objects.hash(numeroDoCartao, titular, documento, idProposta);
+    }
+
+    public void addBloqueio(Bloqueio bloqueio) {
+        this.bloqueios.add(bloqueio);
     }
 }

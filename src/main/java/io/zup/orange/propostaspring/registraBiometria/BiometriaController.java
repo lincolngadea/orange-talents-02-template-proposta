@@ -44,7 +44,7 @@ public class BiometriaController {
 
             Biometria biometria = request.toModel(cartao);
 
-            logger.info("ID do Cartão:{}",biometria.getCartao());
+//            logger.info("ID do Cartão:{}",biometria.getCartao());
             logger.info("Dados da Biometria:{}",biometria.getFingerPrint());
 
             manager.persist(biometria);
@@ -57,7 +57,5 @@ public class BiometriaController {
             logger.error("ERRO NA CONSULTA, MENSAGEM:{}",e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("O Cartão não foi encontrado!");
         }
-
-
     }
 }

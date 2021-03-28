@@ -2,6 +2,7 @@ package io.zup.orange.propostaspring.registroCartao;
 
 import io.zup.orange.propostaspring.registroCartao.avisos.Aviso;
 import io.zup.orange.propostaspring.registroCartao.bloqueios.Bloqueio;
+import io.zup.orange.propostaspring.registroCartao.bloqueios.BloqueioResponseGateway;
 import io.zup.orange.propostaspring.registroCartao.carteiras.Carteira;
 import io.zup.orange.propostaspring.registroCartao.parcelas.Parcela;
 import io.zup.orange.propostaspring.registroCartao.vencimento.Vencimento;
@@ -17,7 +18,7 @@ public class CartaoResponseGateway {
     private String id; //número do cartao
     private LocalDateTime emitidoEm;
     private String titular;
-    private List<Bloqueio> bloqueios;
+    private List<BloqueioResponseGateway> bloqueios;
     private List<Aviso> avisos;
     private List<Carteira> carteiras;
     private List<Parcela> parcelas;
@@ -62,7 +63,7 @@ public class CartaoResponseGateway {
         return titular;
     }
 
-    public List<Bloqueio> getBloqueios() {
+    public List<BloqueioResponseGateway> getBloqueios() {
         return bloqueios;
     }
 
@@ -95,5 +96,10 @@ public class CartaoResponseGateway {
 
     public String toProposta(){
         return id;
+    }
+
+    public BloqueioResponseGateway getUltimoBloqueio() {
+        return bloqueios.get(bloqueios.size() - 1);
+
     }
 }

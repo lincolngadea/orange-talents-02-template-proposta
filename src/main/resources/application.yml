@@ -40,8 +40,18 @@ feign:
         loggerLevel: full
         connectTimeout: 5000
         readTimeout: 5000
+logging:
+  level:
+    io:
+      zup:
+        orange:
+          propostaspring:
+            registroCartao:
+              bloqueios:
+                BloqueioController: DEBUG
+                CartaoGatewy: DEBUG
+                AnaliseFinanceiraDeClientes: DEBUG
 
-logging.level.io.zup.orange.propostaspring.registroProposta.analiseFinanceira.AnaliseFinanceiraDeClientes: DEBUG
 
 management:
   endpoints:
