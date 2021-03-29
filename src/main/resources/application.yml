@@ -18,7 +18,7 @@ spring:
     password: ${DB_PASS:password}
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 
 #Configuração de Segurança
   security:
@@ -53,9 +53,9 @@ logging:
           propostaspring:
             registroCartao:
               bloqueios:
-                BloqueioController: DEBUG
+#                BloqueioController: DEBUG
                 CartaoGatewy: DEBUG
-                AnaliseFinanceiraDeClientes: DEBUG
+#                AnaliseFinanceiraDeClientes: DEBUG
 
 #Actuators e Prometheus
 management:

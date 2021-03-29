@@ -1,17 +1,18 @@
 package io.zup.orange.propostaspring.registroCartao;
 
 import io.zup.orange.propostaspring.registroCartao.avisos.Aviso;
-import io.zup.orange.propostaspring.registroCartao.bloqueios.Bloqueio;
+import io.zup.orange.propostaspring.registroCartao.avisos.AvisoResponseGateway;
 import io.zup.orange.propostaspring.registroCartao.bloqueios.BloqueioResponseGateway;
 import io.zup.orange.propostaspring.registroCartao.carteiras.Carteira;
+import io.zup.orange.propostaspring.registroCartao.carteiras.CarteiraResponse;
 import io.zup.orange.propostaspring.registroCartao.parcelas.Parcela;
-import io.zup.orange.propostaspring.registroCartao.vencimento.Vencimento;
 import io.zup.orange.propostaspring.registroCartao.vencimento.VencimentoResponseGateway;
 import io.zup.orange.propostaspring.registroProposta.Proposta;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CartaoResponseGateway {
 
@@ -19,8 +20,8 @@ public class CartaoResponseGateway {
     private LocalDateTime emitidoEm;
     private String titular;
     private List<BloqueioResponseGateway> bloqueios;
-    private List<Aviso> avisos;
-    private List<Carteira> carteiras;
+    private List<AvisoResponseGateway> avisos;
+    private List<CarteiraResponse> carteiras;
     private List<Parcela> parcelas;
     private BigDecimal limite;
     private BigDecimal renegociacao;
@@ -31,11 +32,11 @@ public class CartaoResponseGateway {
         return vencimento;
     }
 
-    public List<Aviso> getAvisos() {
+    public List<AvisoResponseGateway> getAvisos() {
         return avisos;
     }
 
-    public List<Carteira> getCarteiras() {
+    public List<CarteiraResponse> getCarteiras() {
         return carteiras;
     }
 
@@ -91,7 +92,9 @@ public class CartaoResponseGateway {
     }
 
     public Cartao toModel(Proposta proposta) {
-        return new Cartao(id,titular,limite,proposta.getDocumento(),idProposta, vencimento.toModel());
+        return new Cartao(id,titular,limite,proposta.getDocumento(),idProposta, vencimento.toModel(),
+                avisos.stream().map(AvisoResponseGateway::toModel).collect(Collectors.toList()),
+                carteiras.stream().map(CarteiraResponse::toModel).collect(Collectors.toList()));
     }
 
     public String toProposta(){
@@ -101,6 +104,9 @@ public class CartaoResponseGateway {
     public BloqueioResponseGateway getUltimoBloqueio() {
         return bloqueios.get(bloqueios.size() - 1);
 
+    }
+    public CarteiraResponse getUlimaCarteira(){
+        return carteiras.get(carteiras.size() - 1);
     }
 
 }

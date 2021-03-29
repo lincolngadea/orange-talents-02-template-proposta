@@ -79,13 +79,17 @@ public class Cartao {
             @NotNull BigDecimal limite,
             @NotBlank String documento,
             @NotBlank String idProposta,
-            @NotNull Vencimento vencimento) {
+            @NotNull Vencimento vencimento,
+            List<Aviso> avisos,
+            List<Carteira> carteiras) {
         this.numeroDoCartao = numeroDoCartao;
         this.titular = titular;
         this.limite = limite;
         this.documento = documento;
         this.idProposta = idProposta;
         this.vencimento = vencimento;
+        this.avisos = avisos;
+        this.carteiras = carteiras;
     }
 
     public String getNumeroDoCartao() {
@@ -140,6 +144,14 @@ public class Cartao {
         return idProposta;
     }
 
+    public StatusCartao getStatusCartao() {
+        return statusCartao;
+    }
+
+    public void addCarteira(Carteira carteira) {
+        this.carteiras.add(carteira);
+    }
+
     @Override
     public String toString() {
         return "Cartao{" +
@@ -158,19 +170,6 @@ public class Cartao {
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Cartao cartao = (Cartao) o;
-        return numeroDoCartao.equals(cartao.numeroDoCartao) && titular.equals(cartao.titular) && documento.equals(cartao.documento) && idProposta.equals(cartao.idProposta);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(numeroDoCartao, titular, documento, idProposta);
-    }
-
     public void addBloqueio(Bloqueio bloqueio) {
         this.bloqueios.add(bloqueio);
         atualizaStatus();
@@ -181,6 +180,19 @@ public class Cartao {
         }else {
             this.statusCartao = StatusCartao.ATIVO;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cartao cartao = (Cartao) o;
+        return numeroDoCartao.equals(cartao.numeroDoCartao) && carteiras.equals(cartao.carteiras);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(numeroDoCartao, carteiras);
     }
 }
 
