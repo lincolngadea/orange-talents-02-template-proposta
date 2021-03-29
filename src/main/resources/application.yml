@@ -4,6 +4,8 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
+
+#Conexão com o banco de dados
   datasource:
     hikari:
       connectionTimeout: 20000
@@ -17,6 +19,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+
+#Configuração de Segurança
   security:
     oauth2:
       resourceserver:
@@ -30,6 +34,7 @@ spring:
     grant_type: password
     scope: scopo-proposta
 
+#Variáveis de ambiente para o Feign
 uri_analise_financeira: ${URI_ANALISE:http://localhost:9999/}
 uri_cartao: ${URI_CARTAO:http://localhost:8888/}
 
@@ -52,18 +57,14 @@ logging:
                 CartaoGatewy: DEBUG
                 AnaliseFinanceiraDeClientes: DEBUG
 
-
+#Actuators e Prometheus
 management:
-  endpoints:
-    web:
-      cors:
-        allowed-methods: "GET"
   endpoint:
     health:
-      show-details: "ALWAYS"
-
-#loggin:
-#  level:
-#    org:
-#      sepringframework:
-#        security: DEBUG
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    prometheus:
+      enabled: true
