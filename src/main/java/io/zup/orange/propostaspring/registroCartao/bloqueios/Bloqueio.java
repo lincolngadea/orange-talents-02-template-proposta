@@ -58,11 +58,11 @@ public class Bloqueio {
         return userAgent;
     }
 
-    public Bloqueio(String idExterno, LocalDateTime bloqueadoEm, String sistemaResponsavel, boolean ativo, Cartao cartao) {
+    public Bloqueio(String idExterno, LocalDateTime bloqueadoEm,Boolean ativo, String sistemaResponsavel, Cartao cartao) {
         this.idExterno = idExterno;
         this.bloqueadoEm = bloqueadoEm;
-        this.sistemaResponsavel = sistemaResponsavel;
         this.ativo = ativo;
+        this.sistemaResponsavel = sistemaResponsavel;
         this.cartao = cartao;
     }
 

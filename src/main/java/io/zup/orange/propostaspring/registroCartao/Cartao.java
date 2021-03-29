@@ -147,7 +147,6 @@ public class Cartao {
                 ", numeroDoCartao='" + numeroDoCartao + '\'' +
                 ", emitidoEm=" + emitidoEm +
                 ", titular='" + titular + '\'' +
-                ", bloqueios=" + bloqueios +
                 ", avisos=" + avisos +
                 ", carteiras=" + carteiras +
                 ", parcelas=" + parcelas +
@@ -174,5 +173,14 @@ public class Cartao {
 
     public void addBloqueio(Bloqueio bloqueio) {
         this.bloqueios.add(bloqueio);
+        atualizaStatus();
+    }
+    public void atualizaStatus(){
+        if(this.statusCartao == StatusCartao.ATIVO){
+            this.statusCartao = StatusCartao.BLOQUEADO;
+        }else {
+            this.statusCartao = StatusCartao.ATIVO;
+        }
     }
 }
+

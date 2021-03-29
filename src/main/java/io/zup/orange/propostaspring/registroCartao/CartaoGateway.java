@@ -1,5 +1,7 @@
 package io.zup.orange.propostaspring.registroCartao;
 
+import io.zup.orange.propostaspring.registroCartao.avisos.AvisoRequestGateway;
+import io.zup.orange.propostaspring.registroCartao.avisos.AvisoResponseGateway;
 import io.zup.orange.propostaspring.registroCartao.bloqueios.BloqueioRequestGateway;
 import io.zup.orange.propostaspring.registroCartao.bloqueios.BloqueioResponseGateway;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -11,11 +13,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 public interface CartaoGateway {
 
     @PostMapping
-    public CartaoResponseGateway salvarCartao(CartaoRequest requestGateway);
+    CartaoResponseGateway salvarCartao(CartaoRequest requestGateway);
 
-    @GetMapping("/{id}")
-    public CartaoResponseGateway buscaCartaoPorId(@PathVariable String id);
+    @GetMapping("/{numeroDoCartao}")
+    CartaoResponseGateway buscaCartaoPorId(@PathVariable String numeroDoCartao);
 
-    @PostMapping("/{id}/bloqueios")
-    public BloqueioResponseGateway bloqueio(@PathVariable String id, BloqueioRequestGateway request);
+    @PostMapping("/{numeroDoCartao}/bloqueios")
+    BloqueioResponseGateway bloqueio(@PathVariable String numeroDoCartao, BloqueioRequestGateway request);
+
+    @PostMapping("/{numeroDoCartao}/avisos")
+    AvisoResponseGateway avisoDeBloqueio(@PathVariable String numeroDoCartao, AvisoRequestGateway request);
+
 }

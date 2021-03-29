@@ -45,12 +45,12 @@ public class BloqueioController {
             cartaoGateway.bloqueio(cartao.getNumeroDoCartao(), new BloqueioRequestGateway("Proposta"));
 
             CartaoResponseGateway respostaCartao = cartaoGateway.buscaCartaoPorId(cartao.getNumeroDoCartao());
+
             Bloqueio bloqueio = respostaCartao.getUltimoBloqueio().toModel();
-            logger.info("Informações de Bloqueio ==>{}",bloqueio.toString());
+            logger.info("Informações de Bloqueio ==>{}",bloqueio.isAtivo());
             bloqueio.setInformacoesDeRequest(requestInfos.getRemoteAddr(), agent, cartao);
             cartao.addBloqueio(bloqueio);
             manager.merge(cartao);
-            return ResponseEntity.ok().build();
 
         } catch (FeignException f) {
 
@@ -59,5 +59,8 @@ public class BloqueioController {
         } catch (NoResultException n){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cartao não encontrado...");
         }
+        return ResponseEntity.ok().build();
     }
+
+
 }

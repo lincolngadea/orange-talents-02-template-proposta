@@ -37,6 +37,6 @@ public class BloqueioResponseGateway {
     }
 
     public Bloqueio toModel() {
-        return new Bloqueio(id, LocalDateTime.parse(bloqueadoEm), sistemaResponsavel, ativo, cartao);
+        return new Bloqueio(id, LocalDateTime.parse(bloqueadoEm), ativo,sistemaResponsavel, cartao);
     }
 }

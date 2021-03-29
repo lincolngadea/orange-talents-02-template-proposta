@@ -102,4 +102,5 @@ public class CartaoResponseGateway {
         return bloqueios.get(bloqueios.size() - 1);
 
     }
+
 }
