@@ -139,9 +139,6 @@ services:
       - 8080:8080
     depends_on:
       - postgres
-      - contas
-      - analise
-      - keycloak
     environment:
       POSTGRES_HOST: postgres
       DB_DATABASE: keycloak
@@ -149,8 +146,8 @@ services:
       DB_PASSWORD: password
       URI_CARTAO: http://contas:8888/
       URI_ANALISE: http://analise:9999/
-      KEYCLOAK_ISSUER_URI: http://keycloak:18080/auth/realms/cartao-proposta
-      KEYCLOAK_JWKS_URI: http://keycloak:18080/auth/realms/cartao-proposta/protocol/openid-connect/certs
+      KEYCLOAK_HOST: keycloak
+      KEYCLOAK_PORT: 8080
 
     container_name: proposta
 

@@ -25,14 +25,14 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:18080/auth/realms/cartao-proposta}
-          jwk-set-uri: ${KEYCLOAK_JWKS_URI:http://localhost:18080/auth/realms/cartao-proposta/protocol/openid-connect/certs}
-  auth:
-    client_id: aplicacao-proposta
-    client_secret: 15ead7cd-23d2-418c-9ece-cd175049e2ac
-    uri: ${KEYCLOAK_SUPPLIER:http://localhost:18080/auth/realms/propostas/protocol/openid-connect/token}
-    grant_type: password
-    scope: scopo-proposta
+          issuer-uri: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:18080}/auth/realms/cartao-proposta
+          jwk-set-uri: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:18080}/auth/realms/cartao-proposta/protocol/openid-connect/certs
+auth:
+  client_id: cliente-proposta
+  client_secret: 7e3fccad-d14b-4742-a2c7-d9213b97e5e4
+  uri: http://${KEYCLOAK_HOST:localhost}:${KEYCLOAK_PORT:18080}/auth/realms/cartao-proposta/protocol/openid-connect/token
+  grant_type: password
+  scope: proposta
 
 #Variáveis de ambiente para o Feign
 uri_analise_financeira: ${URI_ANALISE:http://localhost:9999/}
@@ -68,11 +68,11 @@ management:
       enabled: true
 
 # Jaeger - Habilita ou não
-  opentracing:
-    jaeger:
-      enabled: ${JAEGER_ENABLED:true}
-      service-name: propostas
-      http-sender:
-        url: ${JAEGER_ENDPOINT:http://localhost:14268/api/traces}
-      probabilistic-sampler:
-        sampling-rate: ${JAEGER_SAMPLER:1}
+#  opentracing:
+#    jaeger:
+#      enabled: ${JAEGER_ENABLED:true}
+#      service-name: propostas
+#      http-sender:
+#        url: ${JAEGER_ENDPOINT:http://localhost:14268/api/traces}
+#      probabilistic-sampler:
+#        sampling-rate: ${JAEGER_SAMPLER:1}
