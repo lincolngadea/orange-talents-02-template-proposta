@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 public class Carteira {
@@ -69,5 +70,18 @@ public class Carteira {
 
     public TipoDaCarteira getEmissor() {
         return emissor;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Carteira carteira = (Carteira) o;
+        return cartao.equals(carteira.cartao) && emissor == carteira.emissor;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cartao, emissor);
     }
 }

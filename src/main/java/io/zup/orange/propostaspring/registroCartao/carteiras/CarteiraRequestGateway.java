@@ -8,7 +8,6 @@ import javax.validation.constraints.Email;
 public class CarteiraRequestGateway {
 
     @Email
-    @ValorUnico(nomeDoCampo = "email",classeDoDominio = Carteira.class, message = "O Email informado já existe!")
     private String email;
 
     private TipoDaCarteira carteira;

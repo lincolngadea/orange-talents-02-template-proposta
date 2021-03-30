@@ -5,7 +5,7 @@ spring:
     ansi:
       enabled: ALWAYS
 
-#Conexão com o banco de dados
+  #Conexão com o banco de dados
   datasource:
     hikari:
       connectionTimeout: 20000
@@ -20,7 +20,7 @@ spring:
     hibernate:
       ddl-auto: update
 
-#Configuração de Segurança
+  #Configuração de Segurança
   security:
     oauth2:
       resourceserver:
@@ -53,9 +53,7 @@ logging:
           propostaspring:
             registroCartao:
               bloqueios:
-#                BloqueioController: DEBUG
                 CartaoGatewy: DEBUG
-#                AnaliseFinanceiraDeClientes: DEBUG
 
 #Actuators e Prometheus
 management:
@@ -68,3 +66,13 @@ management:
         include: "*"
     prometheus:
       enabled: true
+
+# Jaeger - Habilita ou não
+  opentracing:
+    jaeger:
+      enabled: ${JAEGER_ENABLED:true}
+      service-name: propostas
+      http-sender:
+        url: ${JAEGER_ENDPOINT:http://localhost:14268/api/traces}
+      probabilistic-sampler:
+        sampling-rate: ${JAEGER_SAMPLER:1}
